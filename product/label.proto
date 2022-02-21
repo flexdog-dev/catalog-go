@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package catalog.product;
+option go_package = "catalog-go/product";
+
+message Label {
+  optional int32 id = 1;
+  string name = 2;
+  string title = 3;
+  bool active = 4;
+}

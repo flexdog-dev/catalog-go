@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "catalog-go/product/attribute.proto";
+import "catalog-go/product/category.proto";
+import "catalog-go/product/image.proto";
+import "catalog-go/product/label.proto";
+
+package catalog.product;
+option go_package = "catalog-go/product";
+
+enum Gender {
+  UNKNOWN = 0;
+  MALE = 1;
+  FEMALE = 2;
+  UNISEX = 3;
+  KIDS = 4;
+}
+
+enum Stage {
+  DRAFT = 0;
+  VALIDATION = 1;
+  PUBLIC = 2;
+  REJECTED = 3;
+  DATA_SOURCE = 4;
+}
+
+enum Identifier {
+  REMOTE_ID = 0;
+  MPN = 1;
+  GTIN = 2;
+}
+
+message Product {
+  optional int32 id = 1;
+  string title = 2;
+  string description = 3;
+  string meta_title = 4;
+  string meta_description = 5;
+  string meta_keywords = 6;
+  string slug = 31;
+
+  string code = 7;
+  string manual_pairing_code = 8;
+
+  google.protobuf.Timestamp released_date = 9;
+  Stage stage = 10;
+  string source = 11;
+  Gender gender = 12;
+  string mpn = 13;
+  string gtin = 14;
+  optional int32 main_product_id = 15;
+  string remote_id = 16;
+
+  double recommended_price = 17;
+
+  // referrals
+  int32 brand_id = 18;
+  int32 model_id = 19;
+  optional int32 size_table_id = 20;
+
+  repeated catalog.product.Attribute attributes = 23;
+  repeated catalog.product.Category categories = 24;
+  repeated catalog.product.Image images = 25;
+  repeated catalog.product.Label labels = 30;
+
+  bool active = 26;
+  google.protobuf.Timestamp active_since = 27;
+
+  // metadata
+  google.protobuf.Timestamp created_at = 28;
+  google.protobuf.Timestamp updated_at = 29;
+}
+
+message ProductRequest {
+  int32 id = 1;
+}
+
+message ProductListItem {
+  optional int32 Id = 1;
+  string title = 2;
+  string description = 3;
+  string slug = 18;
+
+  string code = 4;
+  string manual_pairing_code = 5;
+  Gender gender = 6;
+  string mpn = 7;
+  string gtin = 8;
+  string remote_id = 9;
+
+  google.protobuf.Timestamp released_date = 10;
+  Stage stage = 11;
+  bool active = 19;
+
+  // referrals
+  int32 brand_id = 12;
+  int32 model_id = 13;
+  optional int32 size_table_id = 14;
+
+  // metadata
+  google.protobuf.Timestamp created_at = 15;
+  google.protobuf.Timestamp updated_at = 16;
+
+  optional int32 main_product_id = 17;
+}
+
+message IdentifyProductRequest {
+  string remote_id = 1;
+  string mpn = 2;
+  string gtin = 3;
+}
+
+message IdentifiedProductResponse {
+  Identifier identified_by = 1;
+  repeated ProductListItem products = 2;
+}
+
+service ProductService {
+  // product calls
+  rpc Get(ProductRequest) returns(Product);
+  rpc IdentifyProduct(IdentifyProductRequest) returns(IdentifiedProductResponse);
+}

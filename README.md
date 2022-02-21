@@ -1,2 +1,2 @@
-# exam-go
-Examination sandbox for golang
+# Catalog go
+Simple catalog client library 

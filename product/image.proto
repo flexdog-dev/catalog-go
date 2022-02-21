@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package catalog.product;
+option go_package = "catalog-go/product";
+
+message Image {
+  optional int32 id = 1;
+  string source = 2;
+  string alt = 3;
+  bool main = 4;
+}
