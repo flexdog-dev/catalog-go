@@ -6,7 +6,7 @@ import "catalog-go/product/category.proto";
 import "catalog-go/product/image.proto";
 import "catalog-go/product/label.proto";
 
-package catalog.product;
+package flexdog.catalog.product;
 option go_package = "catalog-go/product";
 
 enum Gender {
@@ -59,10 +59,10 @@ message Product {
   int32 model_id = 19;
   optional int32 size_table_id = 20;
 
-  repeated catalog.product.Attribute attributes = 23;
-  repeated catalog.product.Category categories = 24;
-  repeated catalog.product.Image images = 25;
-  repeated catalog.product.Label labels = 30;
+  repeated flexdog.catalog.product.Attribute attributes = 23;
+  repeated flexdog.catalog.product.Category categories = 24;
+  repeated flexdog.catalog.product.Image images = 25;
+  repeated flexdog.catalog.product.Label labels = 30;
 
   bool active = 26;
   google.protobuf.Timestamp active_since = 27;
